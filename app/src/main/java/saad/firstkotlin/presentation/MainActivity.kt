@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.find
 import saad.firstkotlin.Injection
-import saad.kotlingithub.R
-import java.nio.file.Files.find
+import saad.firstkotlin.R
+import saad.firstkotlin.R.id.message
 
 class MainActivity : AppCompatActivity(), Contract.View {
     var forecastList: RecyclerView? = null
@@ -18,7 +17,6 @@ class MainActivity : AppCompatActivity(), Contract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        message.text = "hello kotlin"
         items = mutableListOf(
                 "hi ahmed"
         )
@@ -27,7 +25,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
         forecastList!!.layoutManager = LinearLayoutManager(this)
         forecastList!!.adapter = ForecastListAdapter(items!!)
 
-        message.setOnClickListener { toast("hi") }
+
         var presenter = Presenter(Injection.provideRepo(), this)
         presenter.getList("name")
 
