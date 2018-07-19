@@ -2,11 +2,27 @@ package saad.firstkotlin.presentation
 
 import saad.firstkotlin.data.DataSource
 import saad.firstkotlin.data.Repo
+import saad.firstkotlin.data.User
+import javax.inject.Inject
 
-class Presenter(var repo: Repo, var view: Contract.View) : Contract.Presenter {
+class Presenter(var repo: Repo,var view: Contract.View ) : Contract.Presenter {
 
 
 
+
+
+
+    override fun getUserList() {
+        repo.getAllUser(object : DataSource.UserListCallBack {
+            override fun onListLoaded(users: List<User>) {
+                view.userListLoaded(users)
+            }
+
+            override fun onError(message: String) {
+                view.userListError(message)
+            }
+        })
+    }
 
     override fun getList(name: String) {
         repo.provideList(name,object : DataSource.CallBack{

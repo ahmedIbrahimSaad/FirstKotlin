@@ -6,14 +6,19 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.find
-import saad.firstkotlin.Injection
 import saad.firstkotlin.R
-import saad.firstkotlin.R.id.message
+import saad.firstkotlin.data.Repo
+import saad.firstkotlin.data.User
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), Contract.View {
+
+    @Inject lateinit var Repository: Repo
     var forecastList: RecyclerView? = null
     var items: MutableList<String> = mutableListOf<String>()
+    val presenter:Presenter = Presenter(Repository ,this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,7 +31,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
         forecastList!!.adapter = ForecastListAdapter(items!!)
 
 
-        var presenter = Presenter(Injection.provideRepo(), this)
+        presenter.getUserList()
         presenter.getList("name")
 
         //      var myFrind = Person("islam", "eldesoky")
@@ -41,6 +46,15 @@ class MainActivity : AppCompatActivity(), Contract.View {
         for (i in list)
             items.add(i)
         forecastList!!.adapter.notifyDataSetChanged()
+    }
+
+
+    override fun userListError(message: String) {
+        message1.text=message
+    }
+
+    override fun userListLoaded(users: List<User>) {
+        message1.text=users[0].name
     }
 
     override fun setPresenter(presenter: Contract.Presenter) {

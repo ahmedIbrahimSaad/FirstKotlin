@@ -1,12 +1,17 @@
 package saad.firstkotlin.data
 
 class LocalDataSource: DataSource {
+    override fun getAllUser( userListCallBack: DataSource.UserListCallBack) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     companion object {
         fun create(): LocalDataSource {
             return LocalDataSource()
         }
 
     }
+
     override fun provideList(name: String, callBack: DataSource.CallBack) {
         var list:List<String>
         list=listOf(

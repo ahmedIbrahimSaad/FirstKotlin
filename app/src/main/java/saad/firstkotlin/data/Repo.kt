@@ -1,20 +1,25 @@
 package saad.firstkotlin.data
 
-class Repo(localDataSource: DataSource) : DataSource {
+import javax.inject.Inject
 
-    var localDataSource: LocalDataSource
-
-    companion object {
-        fun create(): Repo {
-            return Repo(LocalDataSource.create())
-        }
-
-        var localDataSource= LocalDataSource.create()
+class Repo
+@Inject constructor(
+        private var localDataSource: DataSource,
+        private val roomUser: RoomUser) : DataSource {
+    override fun getAllUser(userListCallBack: DataSource.UserListCallBack) {
+        val roomUserDao = roomUser.userDao()
+        val users: List<User> = roomUserDao.getAllUsers()
+        if (users.isEmpty()) {
+            userListCallBack.onListLoaded(users)
+        } else
+            userListCallBack.onError("empty")
     }
+
 
     init {
-        this.localDataSource = LocalDataSource.create()
+        localDataSource = LocalDataSource.create()
     }
+
 
     override fun provideList(name: String, callBack: DataSource.CallBack) {
         localDataSource.provideList(name, object : DataSource.CallBack {
