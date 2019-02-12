@@ -19,8 +19,11 @@ class LocalDataSource: DataSource {
                 "Sun 6/29 - Sunny - 20/7"
         )
 
-        if(list==null){callBack.onError("")}else
+        if(list!=null){
             callBack.onListLoaded(list)
+
+        }else
+            callBack.onError("sorry")
 
 
     }

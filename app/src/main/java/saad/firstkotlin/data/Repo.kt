@@ -1,15 +1,13 @@
 package saad.firstkotlin.data
 
-class Repo(localDataSource: DataSource) : DataSource {
+class Repo() : DataSource {
 
     var localDataSource: LocalDataSource
 
     companion object {
         fun create(): Repo {
-            return Repo(LocalDataSource.create())
+            return Repo()
         }
-
-        var localDataSource= LocalDataSource.create()
     }
 
     init {
