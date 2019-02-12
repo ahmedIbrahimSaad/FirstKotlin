@@ -1,6 +1,6 @@
 package saad.firstkotlin.data
 
-class Repo() : DataSource {
+class Repo : DataSource {
 
     var localDataSource: LocalDataSource
 
